@@ -15,13 +15,13 @@ export default function Page() {
   }
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100 p-4 sm:p-6 lg:p-8">
-      <form onSubmit={handleSubmit} className="w-full max-w-lg p-6 sm:p-8 bg-white border border-gray-300 rounded-lg shadow-xl flex flex-col gap-6">
-        <h3 className="text-3xl font-extrabold text-center text-gray-800 tracking-tight">Create a Snippet</h3>
+    <div className="flex justify-center items-center min-h-screen  p-4 sm:p-6 lg:p-8">
+      <form onSubmit={handleSubmit} className="w-full max-w-lg p-6 sm:p-8  border border-gray-300 rounded-lg shadow-xl flex flex-col gap-6">
+        <h3 className="text-3xl font-extrabold text-center text-gray-400 tracking-tight">Create a Snippet</h3>
         
         <div className="flex flex-col gap-4">
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4">
-            <label htmlFor="title" className="w-16 text-gray-700 font-semibold text-sm">
+            <label htmlFor="title" className="w-16 text-gray-400 font-semibold text-sm">
               Title
             </label>
             <input
@@ -34,7 +34,7 @@ export default function Page() {
           </div>
 
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4">
-            <label htmlFor="code" className="w-16 text-gray-700 font-semibold text-sm">
+            <label htmlFor="code" className="w-16 text-gray-400 font-semibold text-sm">
               Code
             </label>
             <textarea

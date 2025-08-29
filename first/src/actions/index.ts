@@ -3,6 +3,7 @@ import { db } from "@/db/db";
 import { snippet } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 export async function editSnippet(id: number, code: string) {
   console.log(id, code);
   await db
@@ -16,6 +17,7 @@ export async function editSnippet(id: number, code: string) {
 
 export async function deleteSnippet(id: number) {
   await db.delete(snippet).where(eq(snippet.id, Number(id)));
+  revalidatePath('/')
   redirect('/')
 }
 
@@ -54,5 +56,6 @@ export async function createSnippet(formState: {message: string},formData: FormD
         }
       }
     }
-    redirect('/snippets/all-snips')
+    redirect('/')
+    revalidatePath('/')
   }

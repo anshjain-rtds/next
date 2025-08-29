@@ -9,9 +9,8 @@ function Header() {
           Home
         </Link>
         <div className="space-x-4 text-xl">
-          <Link href="/performance">Performance</Link>
-          <Link href="/reliability">Reliability</Link>
-          <Link href="/scale">Scale</Link>
+          <Link href="/snippets/all-snips">All Snippets</Link>
+          <Link href="/snippets/new">New Snippet</Link>
         </div>
       </nav>
     </div>

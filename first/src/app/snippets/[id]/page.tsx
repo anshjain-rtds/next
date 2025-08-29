@@ -16,7 +16,7 @@ export default async function SnippetShowPage({
   params,
 }: SnippetShowPageProps) {
   // Use a proper promise resolution, not `Promise` in the interface
-  const { id } = params;
+  const { id } = await params;
 
   // Added a short delay to simulate network latency for demonstration purposes
   await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -57,3 +57,10 @@ export default async function SnippetShowPage({
     </div>
   );
 }
+
+// export async function generateStaticParams() {
+//   const snips = await db.query.snippet.findMany({});
+//   return snips.map((s) => {
+//     return { id: s.id };
+//   });
+// }
