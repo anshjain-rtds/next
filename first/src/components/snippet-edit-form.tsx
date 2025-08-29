@@ -2,24 +2,19 @@
 
 import { snippet } from "@/db/schema";
 import { Editor } from "@monaco-editor/react";
-import   { useState} from "react";
-
+import { useState } from "react";
+import * as actions from "@/actions";
 interface SnippetEditFormProps {
   snippet: typeof snippet;
 }
 export default function SnippetEditForm({ snippet }: SnippetEditFormProps) {
-
-const [ code, setCode ] = useState(snippet.code);
+  const [code, setCode] = useState(snippet.code);
 
   const handleEditorChange = (value: string = "") => {
-    setCode(value)
+    setCode(value);
   };
 
-  async function editSnippet(){
-    'use server';
-
-    
-  }
+  const editSnippetAction = actions.editSnippet.bind(null, Number(snippet.id), code);
   return (
     <div>
       <Editor
@@ -30,6 +25,9 @@ const [ code, setCode ] = useState(snippet.code);
         options={{ minimap: { enabled: false } }}
         onChange={handleEditorChange}
       />
+      <form action={editSnippetAction}>
+        <button type="submit" className="p-2 border rounded" > Save</button>
+      </form>
     </div>
   );
 }
