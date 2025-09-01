@@ -1,14 +1,16 @@
 import Link from "next/link";
 import React from "react";
-import  * as actions from "@/actions";
 import { auth } from "@/auth";
 import Profile from "./profile";
-import { Button } from "@heroui/button";
+import { Button } from "@/components/ui/button";
+import { signOut } from "@/actions/sign-out"; 
+import { signIn } from "@/actions/sign-in";
+
 // import {Navbar,NavbarBrand,NavbarContent,NavbarItem,Input,Button,Avatar} from '@heroui/react'
 export async function Header() {
   const session = await auth();
   return (
-    <header className="w-full bg-gradient-to-r from-blue-900 via-blue-700 to-blue-500 shadow-lg fixed top-0 left-0 z-20">
+    <header className="w-full bg-gradient-to-r from-blue-900 via-blue-700 to-blue-500 shadow-lg fixed top-0 left-0 z-1">
       <nav className="container mx-auto flex items-center justify-between py-4 px-6">
         <Link href="/" className="font-extrabold text-3xl text-white tracking-tight hover:text-blue-200 transition-colors duration-200">
           CodeSnips
@@ -27,15 +29,15 @@ export async function Header() {
               <div className="flex items-center gap-3">
                 <Profile />
               </div>
-              <form action={actions.signOut}>
+              <form action={signOut}>
                 <Button type="submit" className="bg-red-600 hover:bg-red-700 text-white font-bold px-4 py-2 rounded transition duration-200">
                   Sign Out
                 </Button>
               </form>
             </>
           ) : (
-            <form action={actions.signIn}>
-              <Button type="submit" className="bg-green-600 hover:bg-green-700 text-white font-bold px-4 py-2 rounded transition duration-200">
+            <form action={signIn}>
+              <Button type="submit" variant={"default"} className="bg-green-500 text-white font-bold px-4 py-2 rounded transition duration-200">
                 Sign In
               </Button>
             </form>

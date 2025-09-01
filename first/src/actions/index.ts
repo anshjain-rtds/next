@@ -4,8 +4,7 @@ import { snippet } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
-import { signIn } from "./sign-in";
-import { signOut } from "./sign-out";
+// import { signIn } from "./sign-in";
 import { createTopic } from "./create-topic";
 import { createComment } from "./create-comment";
 import { createPost } from "./create-post";
@@ -66,5 +65,5 @@ export async function createSnippet(
   revalidatePath("/");
 }
 export {
-  createComment,createPost,createTopic,signIn,signOut
+  createComment,createPost,createTopic
 }
