@@ -29,6 +29,8 @@ export async function createTopic(
   formState: CreateTopicFormState,
   formData: FormData
 ): Promise<CreateTopicFormState> {
+  await new Promise((resolve) => setTimeout(resolve, 1500));
+
   const result = createTopicSchema.safeParse({
     name: formData.get("name"),
     description: formData.get("description"),
@@ -37,7 +39,7 @@ export async function createTopic(
     return {
       errors: {
         ...result.error.flatten().fieldErrors,
-        _form: [], // Add empty _form array
+        _form: [],
       },
     };
   }
@@ -53,10 +55,13 @@ export async function createTopic(
 
   let topic;
   try {
-    const res = await db.insert(topics).values({
-      slug: result.data.name,
-      description: result.data.description,
-    }).returning();
+    const res = await db
+      .insert(topics)
+      .values({
+        slug: result.data.name,
+        description: result.data.description,
+      })
+      .returning();
     topic = res[0];
   } catch (err: unknown) {
     if (err instanceof Error) {

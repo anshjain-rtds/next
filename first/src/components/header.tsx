@@ -10,7 +10,7 @@ import { signIn } from "@/actions/sign-in";
 export async function Header() {
   const session = await auth();
   return (
-    <header className="w-full bg-gradient-to-r from-blue-900 via-blue-700 to-blue-500 shadow-lg fixed top-0 left-0 z-1">
+    <header className="w-full bg-gradient-to-r from-blue-900 via-blue-700 to-blue-500 shadow-lg fixed  z-1">
       <nav className="container mx-auto flex items-center justify-between py-4 px-6">
         <Link href="/" className="font-extrabold text-3xl text-white tracking-tight hover:text-blue-200 transition-colors duration-200">
           CodeSnips

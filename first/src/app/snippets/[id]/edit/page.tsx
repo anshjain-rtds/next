@@ -21,7 +21,7 @@ export default async function SnippetEditPage(props: SnippetEditPageProps) {
   }
 
   return (
-    <div className="p-6 max-w-2xl mx-auto">
+    <div className="p-6 max-w-2xl mx-auto px-10 py-24">
       <h1 className="text-2xl font-bold mb-4">Edit Snippet</h1>
       <div className="rounded-xl bg-gray-900 shadow-lg p-4">
         <SnippetEditForm snippet={snip} />

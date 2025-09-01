@@ -32,9 +32,9 @@ export default async function SnippetShowPage({
   const deleteSnippetAction = actions.deleteSnippet.bind(null, Number(id));
 
   return (
-    <div className="container mx-auto p-4 max-w-4xl">
+    <div className="container mx-auto p-4 max-w-4xl py-24">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
-        <h1 className="text-4xl font-extrabold text-gray-400 leading-tight break-words">
+        <h1 className="text-4xl font-extrabold  leading-tight break-words">
           {ans.title}
         </h1>
         <div className="flex items-center gap-4">

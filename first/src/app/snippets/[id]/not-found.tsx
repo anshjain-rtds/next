@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function SnippetNotFound() {
   return (
-    <div className="flex flex-col items-center justify-center h-full p-10 text-center">
+    <div className="flex flex-col items-center justify-center h-full px-10 py-24 text-center">
       <h1 className="text-2xl font-bold text-red-400 mb-4">
         Snippet not found
       </h1>

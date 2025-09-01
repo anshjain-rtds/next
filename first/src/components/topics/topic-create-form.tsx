@@ -8,8 +8,9 @@ import {
   PopoverTrigger,
   PopoverContent,
 } from "@heroui/react";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import * as actions from "@/actions";
+import FormButton from "../common/form-button";
 import { useActionState , startTransition } from "react";
 export default function TopicCreateForm() {
   const [formState, action] = useActionState(actions.createTopic, {
@@ -50,7 +51,7 @@ export default function TopicCreateForm() {
               errorMessage={formState.errors.description?.join(",")}
             />
             {formState.errors._form? <div className="p-2 bg-red-400 rounded border text-black border-red-400">{formState.errors._form?.join(', ')}</div> : null}
-            <Button type="submit">Submit</Button>
+            <FormButton >Submit</FormButton>
           </div>
         </form>
       </PopoverContent>
