@@ -1,0 +1,1 @@
+ALTER TABLE `Account` ALTER COLUMN "userId" TO "userId" text NOT NULL REFERENCES User(id) ON DELETE cascade ON UPDATE no action;
