@@ -9,6 +9,7 @@ interface PostShowProps {
 }
 
 export default async function PostShow({postId}: PostShowProps) {
+  await new Promise((resolve)=>setTimeout(resolve,2500))
   const resPost = await db.query.posts.findFirst({
     where: eq(posts.id, postId)
   })

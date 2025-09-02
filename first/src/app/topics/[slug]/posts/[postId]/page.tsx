@@ -3,8 +3,10 @@ import PostShow from "@/components/posts/post-show";
 import CommentList from "@/components/comments/comment-list";
 import CommentCreateForm from "@/components/comments/comment-create-form";
 import paths from "@/path";
-import { fetchCommentsByPostId } from "@/db/queries/comments";
-
+// import { fetchCommentsByPostId } from "@/db/queries/comments";
+import { Suspense } from "react";
+import { LoaderFour } from "@/components/ui/loader";
+// import PostShowLoading from "@/components/posts/post-show-loading";
 interface PostShowPageProps {
   params: Promise<{
     slug: string;
@@ -41,7 +43,10 @@ export default async function PostShowPage({ params }: PostShowPageProps) {
       </div>
 
       <div className="space-y-6">
-        <PostShow postId={postId} />
+        <Suspense fallback={<LoaderFour text="Loading Post..." />}>
+          <PostShow postId={postId}/>
+
+        </Suspense>
         <div className="bg-card rounded-xl shadow-lg p-6 border border-border">
           <h2 className="text-xl font-bold text-foreground mb-4">
             Add a Comment
@@ -49,7 +54,7 @@ export default async function PostShowPage({ params }: PostShowPageProps) {
           <CommentCreateForm postId={postId} startOpen />
         </div>
         <div className="bg-card rounded-xl shadow-lg p-6 border border-border">
-          <h2 className="text-xl font-bold text-foreground mb-4">Comments</h2>
+          {/* <h2 className="text-xl font-bold text-foreground mb-4">Comments</h2> */}
           {/* <CommentList fetchData={()=> fetchCommentsByPostId(postId)}/> */}
           <CommentList postId={postId} />
         </div>

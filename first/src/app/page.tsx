@@ -4,6 +4,8 @@ import TopicCreateForm from "@/components/topics/topic-create-form";
 import TopicList from "@/components/topics/topic-list";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
+import PostList from "@/components/posts/post-list";
+import { fetchTopPosts } from "@/db/queries/posts";
 
 export default function Home() {
   return (
@@ -25,8 +27,9 @@ export default function Home() {
                 View All Snippets
               </Link>
             </div>
-            <div className="h-64 flex items-center justify-center bg-muted rounded-lg border-2 border-dashed border-border">
-              <p className="text-muted-foreground">Top posts content will be displayed here</p>
+            <div className="py-4 px-4 flex items-center justify-center bg-muted rounded-lg border-2 border-dashed border-border">
+              {/* <p className="text-muted-foreground">Top posts content will be displayed here</p> */}
+              <PostList fetchData={fetchTopPosts}/>
             </div>
           </div>
         </div>
