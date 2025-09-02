@@ -11,7 +11,7 @@ const createTopicSchema = z.object({
   name: z
     .string()
     .min(3)
-    .regex(/[a-z-]/, {
+    .regex(/^[a-z-]+$/, {
       message: "must be lowercase letters or dashes without spaces",
     }),
   description: z.string().min(10),

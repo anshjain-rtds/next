@@ -2,7 +2,6 @@
 import React from "react";
 import {
   Input,
-  
   Textarea,
   Popover,
   PopoverTrigger,
@@ -11,10 +10,11 @@ import {
 import { Button } from "../ui/button";
 import * as actions from "@/actions";
 import FormButton from "../common/form-button";
-import { useActionState , startTransition } from "react";
+import { useActionState, startTransition } from "react";
+import PostCreateForm from "../posts/post-create-form";
 export default function TopicCreateForm() {
   const [formState, action] = useActionState(actions.createTopic, {
-    errors: {}
+    errors: {},
   });
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -30,7 +30,7 @@ export default function TopicCreateForm() {
         <Button color="primary">Create a Topic</Button>
       </PopoverTrigger>
       <PopoverContent>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} noValidate>
           <div className="flex flex-col gap-4 p-4 w-80">
             <h3 className="text-lg">Create a topic</h3>
             <Input
@@ -39,7 +39,7 @@ export default function TopicCreateForm() {
               label="name"
               labelPlacement="outside"
               placeholder="Name"
-              isInvalid = {!!formState.errors.name}
+              isInvalid={!!formState.errors.name}
               errorMessage={formState.errors.name?.join(",")}
             />
             <Textarea
@@ -47,11 +47,15 @@ export default function TopicCreateForm() {
               label="Description"
               labelPlacement="outside"
               placeholder="Describe your topic"
-              isInvalid = {!!formState.errors.description}
+              isInvalid={!!formState.errors.description}
               errorMessage={formState.errors.description?.join(",")}
             />
-            {formState.errors._form? <div className="p-2 bg-red-400 rounded border text-black border-red-400">{formState.errors._form?.join(', ')}</div> : null}
-            <FormButton >Submit</FormButton>
+            {formState.errors._form ? (
+              <div className="p-2 bg-red-400 rounded border text-black border-red-400">
+                {formState.errors._form?.join(", ")}
+              </div>
+            ) : null}
+            <FormButton>Submit</FormButton>
           </div>
         </form>
       </PopoverContent>

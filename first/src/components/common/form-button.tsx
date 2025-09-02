@@ -1,6 +1,6 @@
 "use client";
 import { useFormStatus } from "react-dom";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react"; // spinner icon
 import React from "react";
 
