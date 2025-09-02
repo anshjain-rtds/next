@@ -16,9 +16,13 @@ export default async function PostShow({postId}: PostShowProps) {
     notFound();
   }
   return (
-    <div className="m-4">
-      <h1 className="text-2xl font-bold my-2">{resPost.title}</h1>
-      <p className="p-4 border rounded">{resPost.content}</p>
+    <div className="bg-card rounded-xl shadow-lg border  border-border overflow-hidden">
+      <div className="border-b border-border bg-muted/50 px-6 py-4">
+        <h1 className="text-2xl font-bold text-foreground">{resPost.title}</h1>
+      </div>
+      <div className="p-6">
+        <p className="text-foreground whitespace-pre-wrap">{resPost.content}</p>
+      </div>
     </div>
   );
 }

@@ -2,6 +2,7 @@
 import React from "react";
 import { useActionState, startTransition } from "react";
 import * as actions from "@/actions/index";
+import Link from "next/link";
 
 export default function Page() {
   const [formState, action] = useActionState(actions.createSnippet, { message: '' });
@@ -15,50 +16,77 @@ export default function Page() {
   }
 
   return (
-    <div className="flex justify-center items-center min-h-screen  p-4 sm:p-6 lg:p-8">
-      <form onSubmit={handleSubmit} className="w-full max-w-lg p-6 sm:p-8  border border-gray-300 rounded-lg shadow-xl flex flex-col gap-6">
-        <h3 className="text-3xl font-extrabold text-center text-gray-400 tracking-tight">Create a Snippet</h3>
-        
-        <div className="flex flex-col gap-4">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4">
-            <label htmlFor="title" className="w-16 text-gray-400 font-semibold text-sm">
-              Title
+    <div className="container mx-auto px-10 py-24 max-w-2xl">
+      <div className="flex items-center justify-between mb-6">
+        <div>
+          <h1 className="text-3xl font-bold text-foreground">Create Snippet</h1>
+          <p className="text-muted-foreground mt-1">Share your code with the community</p>
+        </div>
+        <Link 
+          href="/snippets/all-snips" 
+          className="text-sm text-primary hover:underline flex items-center"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          Back to snippets
+        </Link>
+      </div>
+      
+      <div className="bg-card rounded-xl shadow-lg p-6 border border-border">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+          <div className="space-y-2">
+            <label htmlFor="title" className="block text-sm font-medium text-foreground">
+              Snippet Title
             </label>
             <input
               type="text"
               name="title"
-              className="flex-1 border text-black border-gray-300 rounded-md p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+              className="w-full rounded-lg border border-input bg-background px-3 py-2 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-ring transition duration-200"
               id="title"
-              placeholder="Enter snippet title..."
+              placeholder="Enter a descriptive title for your snippet"
             />
           </div>
 
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4">
-            <label htmlFor="code" className="w-16 text-gray-400 font-semibold text-sm">
+          <div className="space-y-2">
+            <label htmlFor="code" className="block text-sm font-medium text-foreground">
               Code
             </label>
             <textarea
               name="code"
-              className="flex-1 border text-black border-gray-300 rounded-md p-2 text-sm h-32 resize-y focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+              className="w-full rounded-lg border border-input bg-background px-3 py-2 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-ring transition duration-200 min-h-[200px] font-mono text-sm"
               id="code"
               placeholder="Enter your code here..."
             />
           </div>
-        </div>
 
-        {formState.message && (
-          <div className="my-2 p-3 bg-red-100 border border-red-400 rounded-md text-red-700 text-sm">
-            {formState.message}
+          {formState.message && (
+            <div className="p-3 rounded-lg bg-destructive/10 border border-destructive/20 text-destructive text-sm">
+              <div className="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                {formState.message}
+              </div>
+            </div>
+          )}
+
+          <div className="flex justify-end gap-3 pt-4">
+            <Link 
+              href="/snippets/all-snips" 
+              className="px-4 py-2 rounded-lg border border-input bg-background text-foreground font-medium hover:bg-muted transition-colors duration-200"
+            >
+              Cancel
+            </Link>
+            <button 
+              type="submit" 
+              className="px-4 py-2 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors duration-200 shadow-md"
+            >
+              Create Snippet
+            </button>
           </div>
-        )}
-
-        <button 
-          type="submit" 
-          className="w-full rounded-md p-3 bg-blue-600 text-white font-bold tracking-wide hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200"
-        >
-          Create
-        </button>
-      </form>
+        </form>
+      </div>
     </div>
   );
 }

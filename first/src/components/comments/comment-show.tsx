@@ -1,6 +1,7 @@
 import Image from "next/image";
 import CommentCreateForm from "@/components/comments/comment-create-form";
 import { CommentWithAuthor } from "@/db/queries/comments";
+
 interface CommentShowProps {
   commentId: string;
   comments: CommentWithAuthor[];
@@ -21,25 +22,44 @@ export default function CommentShow({ commentId , comments}: CommentShowProps) {
   });
 
   return (
-    <div className="p-4 border mt-2 mb-1">
+    <div className="bg-card rounded-lg border border-border p-4">
       <div className="flex gap-3">
-        <Image
-          src={comment.user.image || ""}
-          alt="user image"
-          width={40}
-          height={40}
-          className="w-10 h-10 rounded-full"
-        />
-        <div className="flex-1 space-y-3">
-          <p className="text-sm font-medium text-gray-500">
-            {comment.user.name}
-          </p>
-          <p className="text-gray-900">{comment.content}</p>
-
+        {comment.user.image ? (
+          <Image
+            src={comment.user.image}
+            alt="user image"
+            width={40}
+            height={40}
+            className="w-10 h-10 rounded-full"
+          />
+        ) : (
+          <div className="bg-muted rounded-full w-10 h-10 flex items-center justify-center">
+            <span className="text-sm font-medium text-foreground">
+              {comment.user.name.charAt(0).toUpperCase()}
+            </span>
+          </div>
+        )}
+        <div className="flex-1">
+          <div className="flex items-center gap-2 mb-1">
+            <span className="text-sm font-medium text-foreground">
+              {comment.user.name}
+            </span>
+            <span className="text-xs text-muted-foreground">
+              {new Date(comment.createdAt).toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric'
+              })}
+            </span>
+          </div>
+          <p className="text-foreground mb-3">{comment.content}</p>
           <CommentCreateForm postId={comment.postId} parentId={comment.id} />
         </div>
       </div>
-      <div className="pl-4">{renderedChildren}</div>
+      {renderedChildren.length > 0 && (
+        <div className="mt-4 space-y-4 pl-4 border-l-2 border-border">
+          {renderedChildren}
+        </div>
+      )}
     </div>
   );
 }
