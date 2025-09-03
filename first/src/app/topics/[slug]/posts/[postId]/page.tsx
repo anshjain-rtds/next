@@ -18,7 +18,7 @@ export default async function PostShowPage({ params }: PostShowPageProps) {
   const { slug, postId } = await params;
 
   return (
-    <div className="container mx-auto px-10 py-24 max-w-4xl">
+    <div className=" mx-auto px-10 py-24 max-w-4xl">
       <div className="mb-6">
         <Link
           className="text-sm text-primary hover:underline flex items-center"

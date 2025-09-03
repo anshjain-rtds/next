@@ -36,7 +36,7 @@ export default async function TopicsPage() {
   });
 
   return (
-    <div className="container mx-auto px-10 py-24 max-w-4xl">
+    <div className=" mx-auto px-10 py-24 max-w-4xl">
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-3xl font-bold text-foreground">Topics</h1>

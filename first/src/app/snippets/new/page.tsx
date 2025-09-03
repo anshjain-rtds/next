@@ -16,7 +16,7 @@ export default function Page() {
   }
 
   return (
-    <div className="container mx-auto px-10 py-24 max-w-2xl">
+    <div className=" mx-auto px-10 py-24 max-w-2xl">
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-3xl font-bold text-foreground">Create Snippet</h1>
