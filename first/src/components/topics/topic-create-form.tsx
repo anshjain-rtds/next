@@ -23,10 +23,6 @@ export default function TopicCreateForm() {
   
   return (
     <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-4">
-      <div>
-        <h3 className="text-lg font-medium text-foreground mb-3">Create a Topic</h3>
-        <p className="text-sm text-muted-foreground mb-4">Start a new discussion topic for the community</p>
-      </div>
       
       <div className="space-y-2">
         <Input

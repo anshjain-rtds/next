@@ -4,6 +4,8 @@ import NextAuth from "next-auth";
 import GitHub from "next-auth/providers/github";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { db } from "./db/db";
+import { eq } from "drizzle-orm";
+import { users } from "./db/schema";
 
 export const {
   handlers: { GET, POST },
@@ -21,9 +23,15 @@ export const {
       return session;
     },
     async signIn({ user, account, profile, email, credentials }) {
-      // This callback runs before the user is saved to the database
-      // Return true to allow sign in, false to deny
-      return true;
+      try {
+        
+        return true;
+        
+      } catch (error) {
+        console.error("Sign-in error:", error);
+        return false;
+      }
+      
     },
   },
   events: {
@@ -31,4 +39,13 @@ export const {
       console.log("Account linked:", { user: user.email, provider: account.provider, profile });
     },
   },
+  logger: {
+    error(code, ...metadata) {
+      console.error(`Auth Error [${code}]:`, metadata);
+      
+    },
+    warn(code) {
+      console.warn(`Auth Warning [${code}]`);
+    },
+  }
 });
