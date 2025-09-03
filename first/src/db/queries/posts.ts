@@ -58,7 +58,15 @@ export async function fetchTopPosts(): Promise<PostWithData[]> {
     })
     .from(posts)
     .leftJoin(comments, eq(posts.id, comments.postId))
-    .groupBy(posts.id, posts.title, posts.content, posts.createdAt, posts.updatedAt, posts.userId, posts.topicId)
+    .groupBy(
+      posts.id,
+      posts.title,
+      posts.content,
+      posts.createdAt,
+      posts.updatedAt,
+      posts.userId,
+      posts.topicId
+    )
     .orderBy(desc(count(comments.id)))
     .limit(5);
 
@@ -67,8 +75,8 @@ export async function fetchTopPosts(): Promise<PostWithData[]> {
   }
 
   // Get the post IDs from the results
-  const topPostIds = postsWithCounts.map(p => p.id);
-  
+  const topPostIds = postsWithCounts.map((p) => p.id);
+
   // Fetch the full relational data for these posts
   const rawPosts = await db.query.posts.findMany({
     where: (posts, { inArray }) => inArray(posts.id, topPostIds),
@@ -84,8 +92,8 @@ export async function fetchTopPosts(): Promise<PostWithData[]> {
   });
 
   // Create a map for comment counts and preserve order
-  const countMap = new Map(postsWithCounts.map(p => [p.id, p.commentCount]));
-  
+  const countMap = new Map(postsWithCounts.map((p) => [p.id, p.commentCount]));
+
   // Sort the posts by comment count (descending) and transform
   return rawPosts
     .sort((a, b) => (countMap.get(b.id) || 0) - (countMap.get(a.id) || 0))
@@ -96,4 +104,31 @@ export async function fetchTopPosts(): Promise<PostWithData[]> {
       _count: { comments: countMap.get(post.id) || 0 },
       comments: undefined,
     })) as PostWithData[];
+}
+
+export async function fetchPostsBySearchTerm(term: string): Promise<PostWithData[]> {
+  const rawPosts = await db.query.posts.findMany({
+    where: (posts, { or, like }) => or(
+      like(posts.title, `%${term}%`),
+      like(posts.content, `%${term}%`)
+    ),
+    with: {
+      topic: { 
+        columns: { slug: true } 
+      },
+      user: { 
+        columns: { name: true, image: true } 
+      },
+      comments: true, // Fetch all comments to count them
+    },
+  });
+
+  // Transform to match expected structure
+  return rawPosts.map((post) => ({
+    ...post,
+    topic: { slug: post.topic?.slug || "" },
+    user: { name: post.user?.name || null },
+    _count: { comments: post.comments?.length || 0 },
+    comments: undefined,
+  })) as PostWithData[];
 }

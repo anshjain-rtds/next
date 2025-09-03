@@ -9,7 +9,7 @@ interface PostListProps {
 
 export default async function PostList({ fetchData }: PostListProps) {
   const postsData = await fetchData();
-  console.log(postsData)
+  // console.log(postsData)
   if (postsData.length === 0) {
     return (
       <div className="text-center py-12">
