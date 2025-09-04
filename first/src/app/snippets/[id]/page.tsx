@@ -6,6 +6,7 @@ import React from "react";
 import Link from "next/link";
 import * as actions from "@/actions/index";
 import DeleteButton from "./DeleteButton"; // Adjust path as needed
+import { CodeBlock } from "@/components/ui/code-block";
 
 export default async function SnippetShowPage(props : {
   params : Promise<{ id: string }>;
@@ -58,13 +59,14 @@ export default async function SnippetShowPage(props : {
             <h2 className="text-sm font-medium text-foreground">Code</h2>
             <div className="flex items-center gap-2">
               <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary">
-                JavaScript
+                Python
               </span>
             </div>
           </div>
         </div>
         <pre className="p-6 bg-muted rounded-b-xl text-foreground text-sm overflow-x-auto">
-          <code className="whitespace-pre-wrap font-mono">{ans.code}</code>
+          {/* <code className="whitespace-pre-wrap font-mono">{ans.code}</code> */}
+          <CodeBlock filename={ans.title} code={ans.code} language="python" />
         </pre>
       </div>
     </div>

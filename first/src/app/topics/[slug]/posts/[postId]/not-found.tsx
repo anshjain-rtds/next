@@ -1,14 +1,17 @@
 import Link from "next/link";
 import paths from "@/path";
 
-interface PostNotFoundProps {
-  params: Promise<{
+// interface PostNotFoundProps {
+//   params: Promise<{
+//     slug: string;
+//   }>;
+// }
+
+export default async function PostNotFound(props : {params: Promise<{
     slug: string;
   }>;
-}
-
-export default async function PostNotFound({ params }: PostNotFoundProps) {
-  const { slug } = await params;
+}) {
+  const { slug } = await props.params;
   
   return (
     <div className="container mx-auto px-10 py-24 max-w-2xl">
