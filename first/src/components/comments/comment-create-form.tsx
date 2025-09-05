@@ -50,7 +50,7 @@ export default function CommentCreateForm({
           />
         </div>
 
-        {formState.errors._form ? (
+        {/* {formState.errors._form ? (
           <div className="p-3 rounded-lg bg-destructive/10 border border-destructive/20 text-destructive text-sm">
             <div className="flex items-center">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -59,7 +59,7 @@ export default function CommentCreateForm({
               {formState.errors._form?.join(", ")}
             </div>
           </div>
-        ) : null}
+        ) : null} */}
 
         <div className="flex justify-end gap-2">
           {!startOpen && (

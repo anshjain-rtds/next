@@ -4,6 +4,7 @@ import * as actions from "@/actions";
 import { Input, Textarea } from "@heroui/react";
 import FormButton from "../common/form-button";
 import { Button } from "../ui/button";
+import { AlertCircle } from "lucide-react";
 
 interface PostCreateFormProps {
   slug: string;
@@ -52,19 +53,26 @@ export default function PostCreateForm({ slug }: PostCreateFormProps) {
         />
       </div>
 
-      {formState.errors._form ? (
-        <div className="p-3 rounded-lg bg-destructive/10 border border-destructive/20 text-destructive text-sm">
-          <div className="flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            {formState.errors._form?.join(", ")}
+      {/* {formState.errors._form && formState.errors._form.length > 0 && (
+        <div className="rounded-lg border border-red-200 bg-red-50 p-4 dark:border-red-800 dark:bg-red-950/30">
+          <div className="flex items-start">
+            <AlertCircle className="h-5 w-5 text-red-500 dark:text-red-400 mt-0.5 mr-3 flex-shrink-0" />
+            <div className="text-sm">
+              <p className="font-medium text-red-800 dark:text-red-200 mb-1">
+                There was an error creating your post
+              </p>
+              <div className="text-red-700 dark:text-red-300">
+                {formState.errors._form.map((error, index) => (
+                  <p key={index}>{error}</p>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
-      ) : null}
+      )} */}
 
       <div className="pt-2">
-        <FormButton className="w-full">Create Post</FormButton>
+        <FormButton>Create Post</FormButton>
       </div>
     </form>
   );
