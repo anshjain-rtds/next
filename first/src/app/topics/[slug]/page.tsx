@@ -10,7 +10,7 @@ export default async function TopicShowPage(props: {
   const { slug } = await props.params;
   
   return (
-    <div className="container mx-auto px-10 py-24">
+    <div className="container mx-auto px-10 py-24 min-h-screen">
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-3xl font-bold text-foreground capitalize">#{slug}</h1>
