@@ -5,6 +5,6 @@ import { redirect } from "next/navigation";
 
 export async function signOut() {
   return auth.signOut();
-  redirect("/")
+  redirect("/auth")
 }
 

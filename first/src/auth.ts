@@ -4,8 +4,7 @@ import NextAuth from "next-auth";
 import GitHub from "next-auth/providers/github";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { db } from "./db/db";
-import { eq } from "drizzle-orm";
-import { users } from "./db/schema";
+import { cookies } from "next/headers";
 
 export const {
   handlers: { GET, POST },
@@ -17,9 +16,24 @@ export const {
   providers: [GitHub],
   callbacks: {
     async session({ session, user }: any) {
+      console.log("hello")
       if (session && user) {
         session.user.id = user.id;
+        return session;
       }
+
+      const cookieStore =await cookies()
+      const nestToken = cookieStore.get('nest-auth-token')
+      const nestUser = cookieStore.get('nest-user-data')
+      console.log(nestToken,nestUser)
+      if (nestToken && nestUser) {
+        // Merge both auth methods
+        session.nestAuth = {
+          token: nestToken.value,
+          user: JSON.parse(nestUser.value)
+        }
+      }
+      
       return session;
     },
     async signIn({ user, account, profile, email, credentials }) {
@@ -47,5 +61,8 @@ export const {
     warn(code) {
       console.warn(`Auth Warning [${code}]`);
     },
+  },
+  pages: {
+    signIn: '/auth'
   }
 });

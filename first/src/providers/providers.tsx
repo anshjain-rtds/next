@@ -1,12 +1,22 @@
 "use client";
 import { HeroUIProvider } from "@heroui/react";
 import { SessionProvider } from "next-auth/react";
-export function Providers({ children }: { children: React.ReactNode }) {
+import { CustomSessionProvider } from "@/components/SessionProvider";
+import { CustomSession } from "@/lib/session";
+
+interface ProvidersProps {
+  children: React.ReactNode;
+  initialSession?: CustomSession | null;
+}
+
+export function Providers({ children, initialSession }: ProvidersProps) {
   return (
     <SessionProvider>
-      <HeroUIProvider>
-        {children}
+      <CustomSessionProvider initialSession={initialSession}>
+        <HeroUIProvider>
+          {children}
         </HeroUIProvider>
+      </CustomSessionProvider>
     </SessionProvider>
   );
 }

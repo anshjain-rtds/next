@@ -3,13 +3,13 @@ import "./globals.css";
 import { Header } from "@/components/header";
 import { Providers } from "@/providers/providers";
 import { JetBrains_Mono } from "next/font/google";
-import { cn } from "@/lib/utils"; 
+import { cn } from "@/lib/utils";
 import { Suspense } from "react";
 import Footer from "@/components/footer";
+import { getCustomSession } from '@/lib/session';
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
-  
   weight: "400",
 });
 
@@ -33,28 +33,28 @@ export const metadata: Metadata = {
   },
 };
 
-// ✅ root layout
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  // Get initial session for the custom session provider
+  const initialSession = await getCustomSession();
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={cn("min-h-screen  antialiased", jetbrainsMono.className)}
+        className={cn("min-h-screen antialiased", jetbrainsMono.className)}
       >
-        <Providers>
+        <Providers initialSession={initialSession}>
           <Header />
-
-          <main className="mx-auto ">
+          <main className="mx-auto">
             <Suspense
               fallback={<div className="text-center py-10">Loading...</div>}
             >
               {children}
             </Suspense>
           </main>
-
           <Footer />
         </Providers>
       </body>

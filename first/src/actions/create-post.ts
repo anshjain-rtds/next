@@ -1,5 +1,4 @@
 "use server";
-import { z } from "zod";
 import { posts } from "@/db/schema";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
