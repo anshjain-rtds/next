@@ -35,7 +35,7 @@ const signUpSchema = yup.object({
 });
 
 export async function signInAction(state:AuthFormState,formData: FormData) : Promise<AuthFormState>{
-  console.log(formData)
+  // console.log(formData)
 
   try {
     const validatedData = await signInSchema.validate(
@@ -82,13 +82,12 @@ export async function signInAction(state:AuthFormState,formData: FormData) : Pro
       return { error: "Invalid form data", fieldErrors };
     }
 
-    // console.error("Sign in error:", error);
     return { error: "Network error. Please try again." };
   }
 }
 
 export async function signUpAction(state:AuthFormState,formData: FormData) :Promise<AuthFormState>{
-  console.log(formData)
+  // console.log(formData)
   try {
     const validatedData = await signUpSchema.validate(
       {
@@ -107,7 +106,7 @@ export async function signUpAction(state:AuthFormState,formData: FormData) :Prom
     });
     console.log(response)
     if (!response.ok) {
-      return { error: Response.status || "Sign up failed" };
+      return { error: response.statusText || "Sign up failed" };
     }
     
     return { success: true };
@@ -132,5 +131,8 @@ export async function signUpAction(state:AuthFormState,formData: FormData) :Prom
 export async function signOutAction() {
   const cookieStore = await cookies();
   cookieStore.delete("nest-auth-token");
+  if (typeof window !== "undefined") {
+    window.location.reload();
+  }
   redirect("/auth");
 }

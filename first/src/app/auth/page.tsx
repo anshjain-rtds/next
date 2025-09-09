@@ -10,7 +10,7 @@ export default async function AuthPage() {
   console.log(session)
   // Redirect if already authenticated via NextAuth
   if (session) {
-    redirect("/topics");
+    redirect("/");
   }
 
   return (

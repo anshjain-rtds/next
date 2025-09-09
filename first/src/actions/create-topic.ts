@@ -1,7 +1,6 @@
 "use server";
 
 import { topics } from "@/db/schema";
-import { z } from "zod";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 import { db } from "@/db/db";

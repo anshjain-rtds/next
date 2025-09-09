@@ -17,7 +17,7 @@ export function middleware(req: NextRequest) {
   const isAuthRoute = req.nextUrl.pathname.startsWith('/auth')
 
   if ((nextAuthToken || token) && isAuthRoute) {
-    return NextResponse.redirect(new URL('/topics', req.url))
+    return NextResponse.redirect(new URL('/', req.url))
   }
 
   if ((!nextAuthToken && !token) && isProtectedRoute) {

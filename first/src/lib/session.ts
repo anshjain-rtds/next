@@ -50,7 +50,6 @@ export async function getCustomSession(): Promise<CustomSession | null> {
     });
 
     if (!response.ok) {
-      // Token invalid, clear it
       cookieStore.delete("nest-auth-token");
       return null;
     }

@@ -8,6 +8,13 @@ export type PostWithData = typeof posts.$inferSelect & {
   _count: { comments: number };
 };
 
+type RawPost = typeof posts.$inferSelect & {
+  topic: { slug: string } | null;
+  user: { name: string | null; image?: string | null } | null;
+  comments: { id: string }[];
+};
+
+
 export async function fetchPostsByTopicSlug(
   slug: string
 ): Promise<PostWithData[]> {
@@ -31,7 +38,7 @@ export async function fetchPostsByTopicSlug(
       },
       comments: true, // fetch all comments to count them
     },
-  });
+  }) as RawPost[];
 
   // Transform to match Prisma structure
   return rawPosts.map((post) => ({
@@ -89,7 +96,7 @@ export async function fetchTopPosts(): Promise<PostWithData[]> {
       },
       comments: true,
     },
-  });
+  }) as RawPost[];
 
   // Create a map for comment counts and preserve order
   const countMap = new Map(postsWithCounts.map((p) => [p.id, p.commentCount]));
@@ -121,7 +128,7 @@ export async function fetchPostsBySearchTerm(term: string): Promise<PostWithData
       },
       comments: true, // Fetch all comments to count them
     },
-  });
+  }) as RawPost[];
 
   // Transform to match expected structure
   return rawPosts.map((post) => ({

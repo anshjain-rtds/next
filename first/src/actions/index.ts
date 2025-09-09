@@ -4,12 +4,11 @@ import { snippet } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
-// import { signIn } from "./sign-in";
 import { createTopic } from "./create-topic";
 import { createComment } from "./create-comment";
 import { createPost } from "./create-post";
 export async function editSnippet(id: number, code: string) {
-  console.log(id, code);
+  // console.log(id, code);
   await db
     .update(snippet)
     .set({
@@ -48,7 +47,7 @@ export async function createSnippet(
       title: snipTitle,
       code: snipCode,
     });
-    console.log(snip);
+    // console.log(snip);
     //redirect the user back to the root route
   } catch (error: unknown) {
     if (error instanceof Error) {
