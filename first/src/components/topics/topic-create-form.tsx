@@ -4,12 +4,12 @@ import {
   Input,
   Textarea,
 } from "@heroui/react";
-import * as actions from "@/actions";
+import { createTopic } from "@/actions/create-topic";
 import FormButton from "../common/form-button";
 import { useActionState, startTransition } from "react";
 
 export default function TopicCreateForm() {
-  const [formState, action] = useActionState(actions.createTopic, {
+  const [formState, action] = useActionState(createTopic, {
     errors: {},
   });
 

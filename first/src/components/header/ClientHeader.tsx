@@ -17,22 +17,22 @@ interface ClientHeaderProps {
 export default function ClientHeader({ initialSession }: ClientHeaderProps) {
   const { session, user, isLoading } = useCustomSession();
   const router = useRouter();
-  
+
   // Use the session from context, fallback to initial session
   const currentSession = session || initialSession;
   const currentUser = user || initialSession?.user;
 
   const handleSignOut = async () => {
     try {
-      if (currentUser?.authType === 'github') {
-        await signOut({ callbackUrl: '/auth', redirect: false });
+      if (currentUser?.authType === "github") {
+        await signOut({ callbackUrl: "/auth", redirect: false });
       } else {
         await signOutAction();
       }
-      router.push('/auth');
+      router.push("/auth");
       router.refresh();
     } catch (error) {
-      console.error('Sign out error:', error);
+      console.error("Sign out error:", error);
     }
   };
 
@@ -62,18 +62,24 @@ export default function ClientHeader({ initialSession }: ClientHeaderProps) {
   return (
     <div className="flex items-center gap-4">
       <div className="flex items-center gap-3">
-        <Avatar
-          src={currentUser!.image || "/default-avatar.jpg"}
-          alt="avatar"
-          className="border-white/30 shadow-sm"
-          size="sm"
-        />
-        <div className="hidden md:flex flex-col">
-          <span className="text-white font-medium text-sm">
-            {currentUser!.name?.toUpperCase() || currentUser!.username?.toUpperCase() || "User"}
-          </span>
-          
-        </div>
+        <Link
+          href="/profile"
+          className="flex items-center gap-3 hover:opacity-80 transition-opacity"
+        >
+          <Avatar
+            src={currentUser!.image || "/default-avatar.jpg"}
+            alt="avatar"
+            className="border-white/30 shadow-sm"
+            size="sm"
+          />
+          <div className="hidden md:flex flex-col">
+            <span className="text-white font-medium text-sm">
+              {currentUser!.name?.toUpperCase() ||
+                currentUser!.username?.toUpperCase() ||
+                "User"}
+            </span>
+          </div>
+        </Link>
       </div>
 
       <Button

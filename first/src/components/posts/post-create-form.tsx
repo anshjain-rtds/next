@@ -1,22 +1,16 @@
 "use client";
 import React, { startTransition, useActionState } from "react";
-import * as actions from "@/actions";
 import { Input, Textarea } from "@heroui/react";
 import FormButton from "../common/form-button";
-import { Button } from "../ui/button";
-import { AlertCircle } from "lucide-react";
-
+import { createPost } from "@/actions/create-post";
 interface PostCreateFormProps {
   slug: string;
 }
 
 export default function PostCreateForm({ slug }: PostCreateFormProps) {
-  const [formState, action] = useActionState(
-    actions.createPost.bind(null, slug),
-    {
-      errors: {},
-    }
-  );
+  const [formState, action] = useActionState(createPost.bind(null, slug), {
+    errors: {},
+  });
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -39,7 +33,7 @@ export default function PostCreateForm({ slug }: PostCreateFormProps) {
           className="text-foreground"
         />
       </div>
-      
+
       <div className="space-y-2">
         <Textarea
           name="content"

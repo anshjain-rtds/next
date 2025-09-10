@@ -3,9 +3,8 @@
 import { useActionState } from "react";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
-
+import { createComment } from "@/actions/create-comment";
 import FormButton from "@/components/common/form-button";
-import * as actions from "@/actions";
 import { Textarea } from "@heroui/react";
 
 interface CommentCreateFormProps {
@@ -22,7 +21,7 @@ export default function CommentCreateForm({
   const [open, setOpen] = useState(!!startOpen);
   const ref = useRef<HTMLFormElement | null>(null);
   const [formState, action, isPending] = useActionState(
-    actions.createComment.bind(null, { postId, parentId }),
+    createComment.bind(null, { postId, parentId }),
     { errors: {} }
   );
 
