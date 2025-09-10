@@ -2,7 +2,7 @@ import { db } from "@/db/db";
 import { snippet } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { notFound } from "next/navigation";
-import SnippetEditForm from "@/components/snippet-edit-form";
+import SnippetEditForm from "@/components/snippets/snippet-edit-form";
 import Link from "next/link";
 
 interface SnippetEditPageProps {

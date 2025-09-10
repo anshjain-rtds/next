@@ -1,5 +1,5 @@
-import Hero from "@/components/hero";
-import img1 from "../../public/img3.jpg";
+import Hero from "@/components/common/hero";
+import img1 from "../../public/img1.png";
 import TopicCreateForm from "@/components/topics/topic-create-form";
 import TopicList from "@/components/topics/topic-list";
 import { Separator } from "@/components/ui/separator";

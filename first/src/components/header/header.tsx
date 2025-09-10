@@ -1,13 +1,13 @@
 import Link from "next/link";
 import React from "react";
-import { getCustomSession } from '@/lib/session';
-import ClientHeader from "@/components/ClientHeader";
-import SearchInput from "@/components/search-input";
+import { getCustomSession } from "@/lib/session";
+import ClientHeader from "@/components/header/ClientHeader";
+import SearchInput from "@/components/header/search-input";
 import { Suspense } from "react";
 
 export async function Header() {
   const session = await getCustomSession();
-  
+
   return (
     <header className="w-full bg-gradient-to-r from-primary to-blue-600 shadow-lg fixed top-0 z-50">
       <nav className="container mx-auto flex items-center justify-between py-4 px-6">
@@ -17,29 +17,39 @@ export async function Header() {
         >
           CodeSnips
         </Link>
-        
+
         <div className="flex-1 max-w-md mx-8">
           <Suspense>
             <SearchInput />
           </Suspense>
         </div>
-        
+
         <div className="flex items-center gap-6">
           <div className="flex items-center gap-6">
-            <Link
-              href="/snippets/all-snips"
-              className="text-base text-blue-100 hover:text-white font-medium transition-colors"
-            >
-              All Snippets
-            </Link>
-            <Link
-              href="/snippets/new"
-              className="text-base text-blue-100 hover:text-white font-medium transition-colors"
-            >
-              New Snippet
-            </Link>
+            {session?.user && (
+              <>
+                <Link
+                  href="/snippets/all-snips"
+                  className="text-base text-blue-100 hover:text-white font-medium transition-colors"
+                >
+                  All Snippets
+                </Link>
+                <Link
+                  href="/snippets/new"
+                  className="text-base text-blue-100 hover:text-white font-medium transition-colors"
+                >
+                  New Snippet
+                </Link>
+                <Link
+                  href="/tasks"
+                  className="text-base text-blue-100 hover:text-white font-medium transition-colors"
+                >
+                  My Tasks
+                </Link>
+              </>
+            )}
           </div>
-          
+
           {/* Pass session to client component for interactive features */}
           <ClientHeader initialSession={session} />
         </div>

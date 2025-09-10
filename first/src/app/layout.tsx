@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Header } from "@/components/header";
+import { Header } from "@/components/header/header";
 import { Providers } from "@/providers/providers";
 import { JetBrains_Mono } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { Suspense } from "react";
-import Footer from "@/components/footer";
+import Footer from "@/components/common/footer";
 import { getCustomSession } from '@/lib/session';
 
 const jetbrainsMono = JetBrains_Mono({

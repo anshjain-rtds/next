@@ -1,13 +1,13 @@
 // app/auth/page.tsx
 
-import { AuthContainer } from "@/components/AuthForms";
+import { AuthContainer } from "@/components/common/AuthForms";
 import { getCustomSession } from '@/lib/session'
-import GitHubSignInButton from "@/components/GithubSignInButton";
+import GitHubSignInButton from "@/components/common/GithubSignInButton";
 import { redirect } from "next/navigation";
 
 export default async function AuthPage() {
   const session = await getCustomSession();
-  console.log(session)
+  // console.log(session)
   // Redirect if already authenticated via NextAuth
   if (session) {
     redirect("/");

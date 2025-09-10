@@ -1,0 +1,1 @@
+ALTER TABLE `snippet` ADD `userId` text NOT NULL;

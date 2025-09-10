@@ -1,5 +1,5 @@
 import Link from "next/link";
-import paths from "@/path";
+import paths from "@/lib/path";
 // import { posts, users, topics } from "@/db/schema";
 import type { PostWithData } from "@/db/queries/posts";
 

@@ -1,12 +1,13 @@
 "use server";
 import { posts } from "@/db/schema";
 import { redirect } from "next/navigation";
-import { auth } from "@/auth";
+// import { auth } from "@/auth";
 import { db } from "@/db/db";
-import paths from "@/path";
+import paths from "@/lib/path";
 import { revalidatePath } from "next/cache";
 import { eq } from "drizzle-orm";
 import * as yup from "yup";
+import { getCustomSession } from "@/lib/session";
 const createPostSchema = yup.object({
   title: yup.string().min(5, "Title must be at least 5 characters long").required("Title is required"),
   content: yup.string().min(10, "Content must be at least 10 characters long").required("Content is required"),
@@ -31,7 +32,7 @@ export async function createPost(
       content: formData.get("content"),
     }, { abortEarly: false });
 
-    const session = await auth();
+    const session = await getCustomSession();
     if (!session || !session.user || !session.user.id) {
       return {
         errors: {

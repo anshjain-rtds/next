@@ -2,7 +2,7 @@ import Link from "next/link";
 import PostShow from "@/components/posts/post-show";
 import CommentList from "@/components/comments/comment-list";
 import CommentCreateForm from "@/components/comments/comment-create-form";
-import paths from "@/path";
+import paths from "@/lib/path";
 // import { fetchCommentsByPostId } from "@/db/queries/comments";
 import { Suspense } from "react";
 import { LoaderFour } from "@/components/ui/loader";

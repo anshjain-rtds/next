@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { db } from "@/db/db";
-import paths from "@/path";
+import paths from "@/lib/path";
 import { Suspense } from "react";
 import { LoaderFour } from "@/components/ui/loader";
 

@@ -2,11 +2,12 @@
 
 import { topics } from "@/db/schema";
 import { redirect } from "next/navigation";
-import { auth } from "@/auth";
+// import { auth } from "@/auth";
 import { db } from "@/db/db";
-import paths from "@/path";
+import paths from "@/lib/path";
 import { revalidatePath } from "next/cache";
 import * as yup from "yup";
+import { getCustomSession } from "@/lib/session";
 
 const createTopicSchema = yup.object({
   name: yup
@@ -40,7 +41,7 @@ export async function createTopic(
       description: formData.get("description"),
     }, { abortEarly: false });
 
-    const session = await auth();
+    const session = await getCustomSession();
     if (!session || !session.user) {
       return {
         errors: {

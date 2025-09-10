@@ -1,13 +1,12 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { z } from "zod";
-import { auth } from "@/auth";
 import { db } from "@/db/db";
-import paths from "@/path";
+import paths from "@/lib/path";
 import { comments } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import * as yup from "yup";
+import { getCustomSession } from "@/lib/session";
 
 const createCommentSchema = yup.object({
   content: yup.string().min(3, "Content must be at least 3 characters long").required("Content is required"),
@@ -31,7 +30,7 @@ export async function createComment(
       content: formData.get("content"),
     }, { abortEarly: false });
 
-    const session = await auth();
+    const session = await getCustomSession();
     if (!session || !session.user || !session.user.id) {
       return {
         errors: {

@@ -1,0 +1,1 @@
+DROP INDEX `Session_sessionToken_unique`;

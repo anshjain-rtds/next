@@ -13,6 +13,7 @@ export const snippet = sqliteTable("snippet", {
   id: integer("id").primaryKey({ autoIncrement: true }),
   title: text("title").notNull(),
   code: text("code").notNull(),
+  userId: text("userId").notNull()
 });
 
 // ------------------ User ------------------
@@ -21,7 +22,7 @@ export const users = sqliteTable("User", {
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID()),
   name: text("name"),
-  email: text("email").unique().notNull(),
+  email: text("email").notNull(),
   emailVerified: integer("emailVerified", { mode: "timestamp" }),
   image: text("image"),
 });
@@ -61,7 +62,7 @@ export const sessions = sqliteTable("Session", {
   // id: text("id")
   //   .primaryKey()
   //   .$defaultFn(() => crypto.randomUUID()),
-  sessionToken: text("sessionToken").unique().notNull(),
+  sessionToken: text("sessionToken").notNull(),
   userId: text("userId").notNull().references(()=>users.id,{onDelete: "cascade"}),
   expires: integer("expires", { mode: "timestamp" }).notNull(),
 });
@@ -71,7 +72,7 @@ export const verificationTokens = sqliteTable(
   "VerificationToken",
   {
     identifier: text("identifier").notNull(),
-    token: text("token").unique().notNull(),
+    token: text("token").notNull(),
     expires: integer("expires", { mode: "timestamp" }).notNull(),
   },
   (table) => ({

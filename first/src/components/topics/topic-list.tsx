@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { db } from "@/db/db";
 import { Badge } from "@/components/ui/badge";
-import paths from "@/path";
+import paths from "@/lib/path";
 
 export default async function TopicList() {
   const topicsResult = await db.query.topics.findMany({});
