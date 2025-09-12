@@ -47,6 +47,12 @@ function Hero({ imgData, imgAlt, title }: HeroProps) {
           >
             View Snippets
           </Link>
+          <Link
+            href="/queue-dashboard/enhanced"
+            className="px-6 py-3 rounded-xl bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
+          >
+            Manage Queues
+          </Link>
         </div>
       </div>
     </section>

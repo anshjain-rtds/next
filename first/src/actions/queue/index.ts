@@ -1,7 +1,9 @@
 "use server";
 
 import { cookies } from "next/headers";
+import { getCustomSession } from "@/lib/session";
 const NESTJS_API_URL = process.env.NESTJS_API_URL;
+
 export interface QueueStatus {
   waiting: number;
   active: number;
@@ -58,6 +60,10 @@ async function authenticatedFetch(endpoint: string, options: RequestInit = {}) {
 // Server action to get queue status
 export async function getQueueStatus(): Promise<ApiResponse> {
   try {
+    const session = await getCustomSession();
+    if (!session?.user?.id) {
+      throw new Error("User not authenticated");
+    }
     return await authenticatedFetch("/queue/status", {
       method: "GET",
     });
@@ -71,14 +77,15 @@ export async function getQueueStatus(): Promise<ApiResponse> {
 }
 
 // Server action to add a job
-export async function addJobAction(
-  message: string,
-  userId?: number
-): Promise<ApiResponse> {
+export async function addJobAction(message: string): Promise<ApiResponse> {
   try {
+    const session = await getCustomSession();
+    if (!session?.user?.id) {
+      throw new Error("User not authenticated");
+    }
     return await authenticatedFetch("/queue/add-job", {
       method: "POST",
-      body: JSON.stringify({ message, userId }),
+      body: JSON.stringify({ message, userId: session.user.id }),
     });
   } catch (error) {
     console.error("Add job error:", error);
@@ -95,9 +102,13 @@ export async function addDelayedJobAction(
   delay: number
 ): Promise<ApiResponse> {
   try {
+    const session = await getCustomSession();
+    if (!session?.user?.id) {
+      throw new Error("User not authenticated");
+    }
     return await authenticatedFetch("/queue/add-delayed-job", {
       method: "POST",
-      body: JSON.stringify({ message, delay }),
+      body: JSON.stringify({ message, delay,userId: session.user.id }),
     });
   } catch (error) {
     console.error("Add delayed job error:", error);

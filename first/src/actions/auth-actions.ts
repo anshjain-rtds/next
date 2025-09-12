@@ -53,7 +53,7 @@ export async function signInAction(state:AuthFormState,formData: FormData) : Pro
       },
       body: JSON.stringify(validatedData),
     });
-    console.log(response)
+    // console.log(response)
     const data = await response.json();
 
     if (!response.ok) {
@@ -104,7 +104,7 @@ export async function signUpAction(state:AuthFormState,formData: FormData) :Prom
       },
       body: JSON.stringify(validatedData),
     });
-    console.log(response)
+    // console.log(response)
     if (!response.ok) {
       return { error: response.statusText || "Sign up failed" };
     }
