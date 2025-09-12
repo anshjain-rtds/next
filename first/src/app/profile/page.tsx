@@ -60,7 +60,7 @@ export default function ProfilePage() {
 
   useEffect(() => {
     loadProfile();
-  });
+  },[]);
 
   const loadProfile = async () => {
     try {
@@ -347,6 +347,8 @@ export default function ProfilePage() {
                 {profile.avatar && (
                   <div className="flex justify-center">
                     <Image
+                    width={100}
+                    height={100}
                       src={profile.avatar}
                       alt="Profile Avatar"
                       className="w-24 h-24 rounded-full object-cover"

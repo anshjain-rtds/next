@@ -6,7 +6,8 @@ import { JetBrains_Mono } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { Suspense } from "react";
 import Footer from "@/components/common/footer";
-import { getCustomSession } from '@/lib/session';
+import { getCustomSession } from "@/lib/session";
+import { Toaster } from "sonner";
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
@@ -43,9 +44,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={cn("min-h-screen antialiased", jetbrainsMono.className)}
-      >
+      <body className={cn("min-h-screen antialiased", jetbrainsMono.className)}>
         <Providers initialSession={initialSession}>
           <Header />
           <main className="mx-auto">
@@ -53,6 +52,7 @@ export default async function RootLayout({
               fallback={<div className="text-center py-10">Loading...</div>}
             >
               {children}
+              <Toaster position="top-right" richColors />
             </Suspense>
           </main>
           <Footer />

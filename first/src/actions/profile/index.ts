@@ -1,6 +1,7 @@
 // app/profile/actions.ts
 "use server";
 
+import { Task } from "@/lib/types/task";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -24,7 +25,7 @@ interface UserProfile {
   phone?: string;
   avatar?: string;
   bio?: string;
-  tasks: any[];
+  tasks: Task[];
 }
 
 async function getAuthToken() {
