@@ -22,8 +22,6 @@ export function JobForm({
   title,
   description,
   icon: Icon,
-  onSubmit,
-  isLoading,
   children,
 }: JobFormProps) {
   return (

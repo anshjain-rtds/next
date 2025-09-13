@@ -29,7 +29,6 @@ import {
   CheckCircle,
   Timer,
   Activity,
-  
   Zap,
 } from "lucide-react";
 import { toast } from "sonner";
@@ -51,7 +50,6 @@ export default function EnhancedQueueDashboard() {
 
   // Form states
   const [message, setMessage] = useState("Hello from the enhanced queue! 🚀");
-  const [userId, setUserId] = useState("1");
   const [delayMessage, setDelayMessage] = useState(
     "This is a delayed job message"
   );
@@ -62,10 +60,7 @@ export default function EnhancedQueueDashboard() {
   const handleAddJob = async () => {
     startTransition(async () => {
       try {
-        const result = await addJobAction(
-          message,
-          userId ? parseInt(userId) : undefined
-        );
+        const result = await addJobAction(message);
 
         if (result.success) {
           toast.success(`🎉 Job added successfully!`, {
@@ -79,7 +74,7 @@ export default function EnhancedQueueDashboard() {
           });
         }
       } catch (error) {
-        toast.error("Network error occurred");
+        toast.error(`Network error occurred: ${error}`);
       }
     });
   };
@@ -102,7 +97,7 @@ export default function EnhancedQueueDashboard() {
           });
         }
       } catch (error) {
-        toast.error("Network error occurred");
+        toast.error(`Network error occurred: ${error}`);
       }
     });
   };
@@ -124,7 +119,7 @@ export default function EnhancedQueueDashboard() {
           });
         }
       } catch (error) {
-        toast.error("Network error occurred");
+        toast.error(`Network error occurred: ${error}`);
       }
     });
   };
@@ -144,7 +139,7 @@ export default function EnhancedQueueDashboard() {
           });
         }
       } catch (error) {
-        toast.error("Network error occurred");
+        toast.error(`Network error occurred: ${error}`);
       }
     });
   };
@@ -328,17 +323,6 @@ export default function EnhancedQueueDashboard() {
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   className="min-h-[100px]"
-                />
-              </div>
-
-              <div className="grid w-full gap-1.5">
-                <Label htmlFor="userId">User ID (optional)</Label>
-                <Input
-                  id="userId"
-                  type="number"
-                  placeholder="Enter user ID..."
-                  value={userId}
-                  onChange={(e) => setUserId(e.target.value)}
                 />
               </div>
 

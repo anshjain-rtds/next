@@ -1,7 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { getCustomSession } from "@/lib/session";
+import { getCurrentUser } from "@/lib/session";
 const NESTJS_API_URL = process.env.NESTJS_API_URL;
 
 export interface QueueStatus {
@@ -9,6 +9,7 @@ export interface QueueStatus {
   active: number;
   completed: number;
   failed: number;
+  queueStatus?: QueueStatus;
 }
 
 export interface ApiResponse {
@@ -19,25 +20,22 @@ export interface ApiResponse {
   queueStatus?: QueueStatus;
 }
 
-// Helper to get auth token from cookies
-async function getAuthToken() {
+// Helper function to make authenticated API calls
+async function authenticatedFetch(
+  endpoint: string,
+  options: RequestInit = {}
+) {
   const cookieStore = await cookies();
   const token = cookieStore.get("nest-auth-token");
   if (!token) {
-    throw new Error("Unauthorized - please log in again");
+    throw new Error("Unauthorized - auth token not found");
   }
-  return token.value;
-}
-
-// Helper function to make authenticated API calls
-async function authenticatedFetch(endpoint: string, options: RequestInit = {}) {
-  const token = await getAuthToken();
 
   const response = await fetch(`${NESTJS_API_URL}${endpoint}`, {
     ...options,
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${token.value}`,
       ...options.headers,
     },
     cache: "no-store",
@@ -57,11 +55,11 @@ async function authenticatedFetch(endpoint: string, options: RequestInit = {}) {
 }
 
 // Server action to get queue status
-// Server action to get queue status
 export async function getQueueStatus(): Promise<ApiResponse> {
   try {
-    const session = await getCustomSession();
-    if (!session?.user?.id) {
+    // We still need to ensure user is authenticated before performing action.
+    const user = await getCurrentUser();
+    if (!user?.id) {
       throw new Error("User not authenticated");
     }
     return await authenticatedFetch("/queue/status", {
@@ -79,13 +77,13 @@ export async function getQueueStatus(): Promise<ApiResponse> {
 // Server action to add a job
 export async function addJobAction(message: string): Promise<ApiResponse> {
   try {
-    const session = await getCustomSession();
-    if (!session?.user?.id) {
+    const user = await getCurrentUser();
+    if (!user?.id) {
       throw new Error("User not authenticated");
     }
     return await authenticatedFetch("/queue/add-job", {
       method: "POST",
-      body: JSON.stringify({ message, userId: session.user.id }),
+      body: JSON.stringify({ message, userId: user.id }),
     });
   } catch (error) {
     console.error("Add job error:", error);
@@ -102,13 +100,13 @@ export async function addDelayedJobAction(
   delay: number
 ): Promise<ApiResponse> {
   try {
-    const session = await getCustomSession();
-    if (!session?.user?.id) {
+    const user = await getCurrentUser();
+    if (!user?.id) {
       throw new Error("User not authenticated");
     }
     return await authenticatedFetch("/queue/add-delayed-job", {
       method: "POST",
-      body: JSON.stringify({ message, delay,userId: session.user.id }),
+      body: JSON.stringify({ message, delay, userId: user.id }),
     });
   } catch (error) {
     console.error("Add delayed job error:", error);
@@ -122,9 +120,17 @@ export async function addDelayedJobAction(
 // Server action to add bulk jobs
 export async function addBulkJobsAction(count: number): Promise<ApiResponse> {
   try {
-    return await authenticatedFetch(`/queue/add-bulk-jobs?count=${count}`, {
-      method: "POST",
-    });
+    const user = await getCurrentUser();
+    if (!user?.id) {
+      throw new Error("User not authenticated");
+    }
+    return await authenticatedFetch(
+      `/queue/add-bulk-jobs?count=${count}`,
+      {
+        method: "POST",
+        body: JSON.stringify({ userId: user.id }),
+      }
+    );
   } catch (error) {
     console.error("Add bulk jobs error:", error);
     return {
@@ -137,8 +143,13 @@ export async function addBulkJobsAction(count: number): Promise<ApiResponse> {
 // Server action to clear queue
 export async function clearQueueAction(): Promise<ApiResponse> {
   try {
+    const user = await getCurrentUser();
+    if (!user?.id) {
+      throw new Error("User not authenticated");
+    }
     return await authenticatedFetch("/queue/clear", {
       method: "POST",
+      body: JSON.stringify({ userId: user.id }),
     });
   } catch (error) {
     console.error("Clear queue error:", error);

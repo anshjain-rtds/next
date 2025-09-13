@@ -52,7 +52,7 @@ export default async function RootLayout({
               fallback={<div className="text-center py-10">Loading...</div>}
             >
               {children}
-              <Toaster position="top-right" richColors />
+              <Toaster position="bottom-right" richColors closeButton expand={false} />
             </Suspense>
           </main>
           <Footer />
