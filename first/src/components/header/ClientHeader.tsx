@@ -4,7 +4,7 @@ import React from "react";
 import { useCustomSession } from "@/components/SessionProvider";
 import { signOut } from "next-auth/react";
 import { signOutAction } from "@/actions/auth-actions";
-import { Avatar } from "@heroui/react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { CustomSession } from "@/lib/session";
@@ -66,12 +66,10 @@ export default function ClientHeader({ initialSession }: ClientHeaderProps) {
           href="/profile"
           className="flex items-center gap-3 hover:opacity-80 transition-opacity"
         >
-          <Avatar
-            src={currentUser!.image || "/default-avatar.jpg"}
-            alt="avatar"
-            className="border-white/30 shadow-sm"
-            size="sm"
-          />
+          <Avatar>
+            <AvatarImage src={currentUser!.image || "/default-avatar.jpg"} />
+            <AvatarFallback>{currentUser!.name?.charAt(0)}</AvatarFallback>
+          </Avatar>
           <div className="hidden md:flex flex-col">
             <span className="text-white font-medium text-sm">
               {currentUser!.name?.toUpperCase() ||
